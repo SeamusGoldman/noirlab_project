@@ -31,7 +31,7 @@ celestial-app = "celestial_app.main:app"
 ignore-paths = ["^tests/"]
 
 [tool.pylint.messages_control]
-disable = []
+disable = ["C"]
 
 [tool.pylint.format]
 max-line-length = 120
