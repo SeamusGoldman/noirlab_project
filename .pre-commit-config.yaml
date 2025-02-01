@@ -27,10 +27,3 @@ repos:
     rev: 7.1.1
     hooks:
     -   id: flake8
--   repo: local
-    hooks:
-    -   id: pylint
-        name: pylint
-        entry: pdm run pylint
-        language: system
-        files: \.py$
