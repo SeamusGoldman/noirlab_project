@@ -10,7 +10,6 @@ requires-python = "==3.12.*"
 readme = "README.md"
 license = {text = "MIT"}
 
-
 [tool.pdm]
 distribution = false
 
@@ -24,3 +23,25 @@ dev = [
     "pre-commit>=4.1.0",
     "pytest>=8.3.4",
 ]
+
+[project.scripts]
+celestial-app = "celestial_app.main:app"
+
+[tool.pylint.master]
+ignore-paths = ["^tests/"]
+
+[tool.pylint.messages_control]
+disable = []
+
+[tool.pylint.format]
+max-line-length = 120
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+line_length = 120
+profile = "black"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
