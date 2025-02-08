@@ -11,7 +11,7 @@ readme = "README.md"
 license = {text = "MIT"}
 
 [tool.pdm]
-distribution = false
+includes = []
 
 [dependency-groups]
 dev = [
@@ -25,7 +25,7 @@ dev = [
 ]
 
 [project.scripts]
-celestial-app = "api.main:main"
+celestial-app = "app.api.run_app:main"
 
 [tool.pylint.master]
 ignore-paths = ["^tests/"]
