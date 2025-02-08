@@ -5,7 +5,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      - DATABASE_URL=postgresql://admin:Noirlabrules!@db:5432/db
+      - DATABASE_URL=postgresql://noirlab_user:admin@db:5432/noirlab_db
     networks:
       - mynetwork
     ports:
@@ -16,13 +16,13 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=Noirlabrules!
-      - POSTGRES_DB=db
+      - POSTGRES_USER=noirlab_user
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=noirlab_db
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d db"]
+      test: ["CMD-SHELL", "pg_isready -U noirlab_user -d noirlab_db"]
       interval: 5s
       retries: 5
       start_period: 10s
