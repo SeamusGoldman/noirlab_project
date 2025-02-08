@@ -57,4 +57,4 @@ class CelestialRead(CelestialBase):
     description: str
 
     class Config:
-        orm_mode = True  # This tells Pydantic to allow ORM models to be used in Pydantic models.
+        from_attributes = True  # This tells Pydantic to create a Pydantic model from the attributes of the ORM model.

@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 
-from app.api import celestial_routes
+from app.api.celestial_routes import celestial_router
 
-app = FastAPI()
-app.include_router(celestial_routes.router)
+app = FastAPI(title="Astronomy API")
+
+# Include API routes
+app.include_router(celestial_router)
 
 
 def main():

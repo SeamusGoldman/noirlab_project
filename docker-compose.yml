@@ -1,8 +1,6 @@
 services:
   app:
     build: .
-    ports:
-      - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
@@ -10,6 +8,8 @@ services:
       - DATABASE_URL=postgresql://admin:Noirlabrules!@db:5432/db
     networks:
       - mynetwork
+    ports:
+      - "8000:8000"
 
   db:
     image: postgres:latest
