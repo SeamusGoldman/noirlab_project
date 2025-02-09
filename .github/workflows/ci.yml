@@ -34,4 +34,4 @@ jobs:
 
       - name: Run Tests
         run: |
-          pdm run pytest -v
+          pdm run pytest tests/ -v
