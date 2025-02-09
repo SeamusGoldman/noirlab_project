@@ -1,3 +1,7 @@
+"""
+Celestial schema module. It contains the Pydantic models for the Celestial objects.
+"""
+
 from pydantic import BaseModel
 
 

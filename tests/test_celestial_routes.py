@@ -1,3 +1,9 @@
+"""
+This module contains tests for the celestial object routes in the FastAPI application. The tests will use the
+TestClient from the FastAPI test utilities to send requests to the API and check the responses. The tests will cover
+creating, reading, updating, and deleting celestial objects.
+"""
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlmodel import Session, SQLModel, create_engine
@@ -9,6 +15,9 @@ from app.database import get_session
 
 @pytest.fixture(name="session")
 def session_fixture():
+    """
+    Create a new database session for a test. This is a fixture that will be called before each test function.
+    """
     engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
     SQLModel.metadata.create_all(engine)
     with Session(engine) as session:
@@ -17,17 +26,25 @@ def session_fixture():
 
 @pytest.fixture(name="client")
 def client_fixture(session: Session):
+    """
+    Create a test client for the FastAPI application. This is a fixture that will be called before each test function.
+    """
+
     def get_session_override():
         return session
 
-    app.dependency_overrides[get_session] = get_session_override
+    app.dependency_overrides[get_session] = get_session_override  # Override the get_session dependency
 
-    client = TestClient(app)
+    client = TestClient(app)  # Create a new test client using the fastapi app
     yield client
     app.dependency_overrides.clear()
 
 
 def test_create_celsetial(client: TestClient):
+    """
+    Test creating a new celestial object. This test will send a POST request to the /celestial/ endpoint with a JSON
+    payload containing the details of the celestial object to be created.
+    """
     response = client.post(
         "/celestial/",
         json={
@@ -46,8 +63,10 @@ def test_create_celsetial(client: TestClient):
 
 
 def test_get_all_celestial_objects(client: TestClient):
-    """Test retrieving all celestial objects."""
-    # First, create an object
+    """
+    Test retrieving all celestial objects. This test will send a GET request to the /celestial/ endpoint and check if
+    the response contains a list of celestial objects.
+    """
     client.post(
         "/celestial/",
         json={
@@ -67,8 +86,10 @@ def test_get_all_celestial_objects(client: TestClient):
 
 
 def test_get_celestial_by_id(client: TestClient):
-    """Test retrieving a celestial object by its ID."""
-    # First, create an object
+    """
+    Test retrieving a celestial object by its ID. This test will create a new celestial object, then send a GET request
+    to the /celestial/{id} endpoint to fetch the object by its ID.
+    """
     create_response = client.post(
         "/celestial/",
         json={
@@ -81,7 +102,6 @@ def test_get_celestial_by_id(client: TestClient):
     created_data = create_response.json()
     object_id = created_data["id"]
 
-    # Fetch by ID
     response = client.get(f"/celestial/{object_id}")
     data = response.json()
 
@@ -91,8 +111,10 @@ def test_get_celestial_by_id(client: TestClient):
 
 
 def test_update_celestial(client: TestClient):
-    """Test updating an existing celestial object."""
-    # First, create an object
+    """
+    Test updating a celestial object. This test will create a new celestial object, then send a PUT request to the
+    /celestial/{id} endpoint to update the object with new data.
+    """
     create_response = client.post(
         "/celestial/",
         json={
@@ -123,8 +145,10 @@ def test_update_celestial(client: TestClient):
 
 
 def test_delete_celestial(client: TestClient):
-    """Test deleting a celestial object."""
-    # First, create an object
+    """
+    Test deleting a celestial object. This test will create a new celestial object, then send a DELETE request to the
+    /celestial/{id} endpoint to delete the object. It will then verify that the object has been deleted.
+    """
     create_response = client.post(
         "/celestial/",
         json={
@@ -137,10 +161,8 @@ def test_delete_celestial(client: TestClient):
     created_data = create_response.json()
     object_id = created_data["id"]
 
-    # Delete the object
     delete_response = client.delete(f"/celestial/{object_id}")
     assert delete_response.status_code == 204
 
-    # Try fetching it again (should return 404)
     get_response = client.get(f"/celestial/{object_id}")
     assert get_response.status_code == 404
