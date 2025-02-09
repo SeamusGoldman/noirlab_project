@@ -10,9 +10,6 @@ requires-python = "==3.12.*"
 readme = "README.md"
 license = {text = "MIT"}
 
-[tool.pdm]
-includes = []
-
 [dependency-groups]
 dev = [
     "black>=25.1.0",
@@ -22,6 +19,7 @@ dev = [
     "flake8>=7.1.1",
     "pre-commit>=4.1.0",
     "pytest>=8.3.4",
+    "httpx>=0.28.1",
 ]
 
 [project.scripts]
@@ -48,3 +46,6 @@ profile = "black"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
+
+[tool.pdm]
+includes = []

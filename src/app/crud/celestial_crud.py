@@ -15,7 +15,7 @@ def create_celestial(db: Session, celestial: CelestialCreate) -> Celestial:
     Returns:
     - Celestial
     """
-    db_celestial = Celestial(**celestial.dict())
+    db_celestial = Celestial(**celestial.model_dump())
     db.add(db_celestial)
     db.commit()
     db.refresh(db_celestial)
