@@ -1,3 +1,9 @@
+"""
+Celestial object routes are defined in this module. The routes allow creating, reading, updating, and deleting
+celestial objects in the database. The routes are implemented using FastAPI's APIRouter, and the route functions use
+the SQLModel Session dependency to interact with the database.
+"""
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 

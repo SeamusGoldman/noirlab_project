@@ -1,3 +1,8 @@
+"""
+Celestial CRUD operations. The CRUD operations are implemented using SQLModel's Session dependency to interact with the
+database. The operations include creating, reading, updating, and deleting celestial objects.
+"""
+
 from sqlmodel import Session, select
 
 from app.models.celestial_model import Celestial
@@ -15,7 +20,7 @@ def create_celestial(db: Session, celestial: CelestialCreate) -> Celestial:
     Returns:
     - Celestial
     """
-    db_celestial = Celestial(**celestial.dict())
+    db_celestial = Celestial(**celestial.model_dump())
     db.add(db_celestial)
     db.commit()
     db.refresh(db_celestial)
